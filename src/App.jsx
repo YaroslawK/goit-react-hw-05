@@ -7,6 +7,8 @@ import { Routes, Route, useLocation} from 'react-router-dom';
 import MoviesPage from './pages/MoviesPage/MoviesPage';
 import Navigation from './components/Navigation/Navigation';
 import MoviesDetailsPage from './pages/MoviesDetailspage/MoviesDetailsPage';
+import MovieCast from './components/MovieCast/MovieCast';
+import MovieReview from './components/MovieReview/MovieReview';
 
 
 function App() {
@@ -53,7 +55,12 @@ function App() {
       <Routes>
         <Route path='/' element={<HomePage movies={movies} />} />
         <Route path='/movies' element={<MoviesPage onSubmit={onSubmit} movies={movies} />} />
-        <Route path='/movies/:moviesId' element={<MoviesDetailsPage/>} />
+        <Route path='/movies/:moviesId' element={<MoviesDetailsPage />}>
+          <Route path="cast" element={<MovieCast/>} />
+          <Route path="review" element={<MovieReview />} />
+        </Route>
+        <Route path='*' element={<div>404</div>}/>
+        
       </Routes>
     </>
   );

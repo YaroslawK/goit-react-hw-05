@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
 import { getMovieDetails } from "../../tmdb-api";
 
 const MoviesDetailsPage = () => {
   const { moviesId } = useParams();
   const [movie, setMovie] = useState(null);
     const navigate = useNavigate();
-    console.log({moviesId});
 
   useEffect(() => {
     if (!moviesId) return;
@@ -40,7 +39,19 @@ const MoviesDetailsPage = () => {
             />
           <p>{movie.overview}</p>
           <p>Release Date: {movie.release_date}</p>
-          <p>Rating: {movie.vote_average}</p>
+            <p>Rating: {movie.vote_average}</p>
+            <nav>
+            <ul>
+              <li>
+                <Link to="cast">Cast</Link>
+              </li>
+              <li>
+                <Link to="review">Review</Link>
+              </li>
+            </ul>
+          </nav>
+          <Outlet/>
+
         </div>
       ) : (
         <p>Loading...</p>

@@ -43,3 +43,25 @@ export async function getMovieDetails(movieId) {
     return { results: [] };
   }
 }
+
+export async function getMovieCast(movieId) {
+  const url = `${BASE_URL}/movie/${movieId}/credits`;
+  try {
+    const response = await axios.get(url, options);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return { cast: [] };
+  }
+}
+
+export async function getMovieReviews(movieId) {
+  const url = `${BASE_URL}/movie/${movieId}/reviews`;
+  try {
+    const response = await axios.get(url, options);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return { results: [] };
+  }
+}
