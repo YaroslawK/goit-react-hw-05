@@ -5,6 +5,14 @@
   text-align: center;
 }
 
+.moviesList{
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  list-style-type: none;
+  
+}
+
 .logo {
   height: 6em;
   padding: 1.5em;
