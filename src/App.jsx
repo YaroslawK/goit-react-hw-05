@@ -1,14 +1,17 @@
 import './App.css';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, lazy, Suspense } from 'react';
 import { getMovies } from './tmdb-api';
 import { searchMovies } from './tmdb-api';
-import HomePage from './pages/HomePage/HomePage';
 import { Routes, Route, useLocation} from 'react-router-dom';
-import MoviesPage from './pages/MoviesPage/MoviesPage';
-import Navigation from './components/Navigation/Navigation';
-import MoviesDetailsPage from './pages/MoviesDetailspage/MoviesDetailsPage';
-import MovieCast from './components/MovieCast/MovieCast';
-import MovieReview from './components/MovieReview/MovieReview';
+import NotFoundPage from './pages/NotFoundPage/NotFoundPage';
+
+
+const MoviesDetailsPage = lazy(() => import('./pages/MoviesDetailspage/MoviesDetailsPage'))
+const MoviesPage = lazy(() => import('./pages/MoviesPage/MoviesPage'))
+const MovieCast = lazy(() => import('./components/MovieCast/MovieCast'))
+const MovieReview = lazy(() => import('./components/MovieReview/MovieReview'))
+const HomePage = lazy(() => import('./pages/HomePage/HomePage'))
+const Navigation = lazy(() => import('./components/Navigation/Navigation'))
 
 
 function App() {
@@ -52,16 +55,17 @@ function App() {
   return (
     <>
       <Navigation />
+      <Suspense fallback='null'>
       <Routes>
         <Route path='/' element={<HomePage movies={movies} />} />
         <Route path='/movies' element={<MoviesPage onSubmit={onSubmit} movies={movies} />} />
-        <Route path='/movies/:moviesId' element={<MoviesDetailsPage />}>
+        <Route path='/movies/:moviesId' element={<MoviesDetailsPage/>}>
           <Route path="cast" element={<MovieCast/>} />
           <Route path="review" element={<MovieReview />} />
         </Route>
-        <Route path='*' element={<div>404</div>}/>
-        
-      </Routes>
+        <Route path='*' element={<NotFoundPage/>}/>
+        </Routes>
+        </Suspense>
     </>
   );
 }

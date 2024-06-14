@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { getMovieCast } from '../../tmdb-api';
+import css from './MovieCast.module.css'
 
 const MovieCast = () => {
   const { moviesId } = useParams();
     const [cast, setCast] = useState([]);
-    console.log(cast);
 
   useEffect(() => {
     if (!moviesId) return;
@@ -17,7 +17,7 @@ const MovieCast = () => {
   }, [moviesId]);
 
   return (
-    <div>
+    <div className={css.castContainer}>
       <h2>Cast</h2>
       <ul>
         {cast.map(actor => (

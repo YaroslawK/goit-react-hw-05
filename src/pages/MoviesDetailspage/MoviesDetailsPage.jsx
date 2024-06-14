@@ -1,11 +1,11 @@
-import { useEffect, useState } from "react";
-import { Link, Outlet, useNavigate, useParams } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import { getMovieDetails } from "../../tmdb-api";
+import css from './MoviesDetailsPage.module.css'
 
 const MoviesDetailsPage = () => {
   const { moviesId } = useParams();
   const [movie, setMovie] = useState(null);
-    const navigate = useNavigate();
 
   useEffect(() => {
     if (!moviesId) return;
@@ -16,9 +16,10 @@ const MoviesDetailsPage = () => {
     fetchMovieDetails();
   }, [moviesId]);
 
-  const handleGoBack = () => {
-    navigate(-1);
-    };
+  
+  
+  const location = useLocation();
+  const saveLocation = useRef(location.state ?? '/movies');
     
     const baseImageURL = 'https://image.tmdb.org/t/p/w200';
   const defaultImg = 'https://dl-media.viber.com/10/share/2/long/vibes/icon/image/0x0/95e0/5688fdffb84ff8bed4240bcf3ec5ac81ce591d9fa9558a3a968c630eaba195e0.jpg';
@@ -26,14 +27,15 @@ const MoviesDetailsPage = () => {
 
   return (
     <div>
-      <button onClick={handleGoBack}>Go Back</button>
+      <Link to={saveLocation.current}>Go Back</Link>
       {movie ? (
-        <div>
+        <div className={css.movieDetailsContainer}>
           <h1>{movie.title}</h1>
           <img
+            className={css.img}
               src={movie.poster_path ? `${baseImageURL}${movie.poster_path}` : defaultImg}
-              width={250}
-              height={150}
+              width={500}
+              height={300}
               alt={movie.title}
               onError={(e) => { e.target.onerror = null; e.target.src = defaultImg; }}
             />
