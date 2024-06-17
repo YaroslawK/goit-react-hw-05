@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Link, Outlet, useLocation, useParams } from "react-router-dom";
 import { getMovieDetails } from "../../tmdb-api";
-import css from './MoviesDetailsPage.module.css'
+import css from './MovieDetailsPage.module.css'
 
 const MoviesDetailsPage = () => {
   const { moviesId } = useParams();
